@@ -1,0 +1,8 @@
+{
+  "name": "musichub-app",
+  "app_id": "57d1d0ba",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
