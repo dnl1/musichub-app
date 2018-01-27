@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { EnvVariables } from "../../app/enviroment-variables/environment-variables.token";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Alert } from '../../providers/alert/alert'
 
 /*
   Generated class for the ApiConsumeProvider provider.
@@ -35,34 +36,33 @@ export class HeaderAuth {
   public set uid(uid: string) {
     this._uid = uid;
   }
-
-
 }
 
 export class ApiConsume {
 
   private BASE_URL: string
-  constructor(@Inject(EnvVariables) private envVars, @Inject(HttpClient) private http : HttpClient) {
+  constructor(@Inject(EnvVariables) private envVars, @Inject(HttpClient) private http : HttpClient, @Inject(Alert) private alert : Alert) {
     this.BASE_URL = envVars.apiEndpoint;
   }
 
-  public get(pUrl: string, onSuccessCallback, onFailCallback) {
+  public get(pUrl: string, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
     let url = this.getUrl(pUrl);
     let headers = this.getHeaders()
-    console.log('url', url);
+
+    if(showLoading) this.alert.showLoading();
     this.http.get(url, {
       headers: headers as any,
-    }).subscribe(data => { console.log('api-consume get data','data') });
+    }).subscribe(data => { if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
   }
 
-  public post(pUrl: string, body: any, onSuccessCallback, onFailCallback) {
+  public post(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
     let url = this.getUrl(pUrl);
     let headers = this.getHeaders()
-    console.log('url', url);
 
+    if(showLoading) this.alert.showLoading();
     this.http.post(url, body, {
       headers: headers as any
-    }).subscribe(data => { console.log('api-consume post data','data') });
+    }).subscribe(data => { if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
   }
 
   private getUrl(url: string): string {

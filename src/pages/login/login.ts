@@ -1,9 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { AlertController } from 'ionic-angular/components/alert/alert-controller';
-import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-import { User } from '../../app/models/user'
+import { User } from '../../app/models/user';
+import { TabsPage } from '../tabs/tabs';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the LoginPage page.
@@ -15,43 +15,26 @@ import { User } from '../../app/models/user'
 @IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
 })
 export class LoginPage {
-  loading: Loading;
   envVariables: object;
-  user : User = { email: '', password: '', birth_date: '', name: '' };
+  user : User = new User();
   
-  constructor(public nav: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl : AlertController, private loadingCtrl : LoadingController) { }
+  constructor(public nav: NavController, public navParams: NavParams, private auth: AuthService) {
+  }
 
-  public register(){
-    this.nav.push("RegisterPage");
+  public createAccount() {
+    this.nav.push(RegisterPage);
   }
 
   public login(){
-    this.showLoading();
     this.auth.login(this.user).subscribe(allowed => {
-
+      console.log('allowed',allowed);
+      if(allowed)
+      {
+        this.nav.push(TabsPage);
+      }
     });
   }
-
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
-    this.loading.present();
-  }
- 
-  showError(text) {
-    this.loading.dismiss();
- 
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
 }

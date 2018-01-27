@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { EnvVariables } from '../../app/enviroment-variables/environment-variables.token';
 import { User } from '../../app/models/user'
 import { ApiConsume } from '../api-consume/api-consume';
+import { Alert } from '../../providers/alert/alert'
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -18,26 +18,36 @@ export class AuthService {
   /**
    *
    */
-  constructor( @Inject(EnvVariables) public envVars, public apiConsume: ApiConsume) { }
+  constructor( @Inject(EnvVariables) public envVars, public apiConsume: ApiConsume, public alert: Alert) { }
   /**
    * login
    */
   public login(user: User) {
-    console.log(`user.email`, user.email);
-    console.log(`user.password`, user.password);
-    if (user.email === null || user.password === null) {
-      return Observable.throw("Preencha o e-mail e a senha!");
-    }
-    else {
-      this.apiConsume.post('login', { email: user.email, password: user.password }, (data: object): void => {
-        console.log('data', data);
-      }, (error: object): void => {
-        console.log('error', error);
-      });
-      return Observable.create(observer => {
-        observer.next(true);
-        observer.complete();
-      });
-    }
+    return Observable.create(observer => {
+      if (user.email === null || user.password === null) {
+        return Observable.throw("Preencha o e-mail e a senha!");
+      }
+      else {
+        this.apiConsume.post('login', { email: user.email, password: user.password }, (data: any): void => {
+          let usuario: User = new User();
+          usuario.name = data.name;
+          usuario.email = data.email;
+          usuario.birth_date = data.birth_date;
+          usuario.id = data.id;
+
+          usuario.save();
+
+          observer.next(true);
+          observer.complete();
+
+        }, (error: any): void => {
+          if (error.status == 401) {
+            this.alert.showError('E-mail ou senha incorretos!');
+            observer.next(false);
+            observer.complete();
+          }
+        });
+      }
+    });
   }
 }
