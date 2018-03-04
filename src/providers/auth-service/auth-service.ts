@@ -28,8 +28,10 @@ export class AuthService {
         return Observable.throw("Preencha o e-mail e a senha!");
       }
       else {
+        localStorage.clear(); //FODASE
         this.apiConsume.post('login', { email: user.email, password: user.password }, (data: any): void => {
-          let usuario: User = new User();
+        console.log('data', data);
+        let usuario: User = new User();
           usuario.name = data.name;
           usuario.email = data.email;
           usuario.birth_date = data.birth_date;

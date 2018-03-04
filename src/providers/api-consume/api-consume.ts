@@ -1,6 +1,6 @@
 import { Inject } from '@angular/core';
 import { EnvVariables } from "../../app/enviroment-variables/environment-variables.token";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Alert } from '../../providers/alert/alert'
 
 /*
@@ -41,7 +41,7 @@ export class HeaderAuth {
 export class ApiConsume {
 
   private BASE_URL: string
-  constructor(@Inject(EnvVariables) private envVars, @Inject(HttpClient) private http : HttpClient, @Inject(Alert) private alert : Alert) {
+  constructor(@Inject(EnvVariables) private envVars, @Inject(HttpClient) private http: HttpClient, @Inject(Alert) private alert: Alert) {
     this.BASE_URL = envVars.apiEndpoint;
   }
 
@@ -49,47 +49,70 @@ export class ApiConsume {
     let url = this.getUrl(pUrl);
     let headers = this.getHeaders()
 
-    if(showLoading) this.alert.showLoading();
+    if (showLoading) this.alert.showLoading();
     this.http.get(url, {
-      headers: headers as any,
-    }).subscribe(data => { if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
+      headers: headers,
+      observe: 'response'
+    }).subscribe(data => { if (showLoading) this.alert.hideLoading(); if (onSuccessCallback) onSuccessCallback(data.body) }, data => { if (showLoading) this.alert.hideLoading(); if (onFailCallback) onFailCallback(data) });
   }
 
   public post(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
     let url = this.getUrl(pUrl);
-    let headers = this.getHeaders()
+    let headers = this.getHeaders();
 
-    if(showLoading) this.alert.showLoading();
+    if (showLoading) this.alert.showLoading();
     this.http.post(url, body, {
-      headers: headers as any
-    }).subscribe(data => { this.parseHeaders(data); if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
+      headers: headers,
+      observe: 'response'
+    })
+      .subscribe(data => {
+        console.log('data', data);
+        console.log(data.headers.get('access_token'))
+        this.parseHeaders(data.headers);
+        if (showLoading) this.alert.hideLoading();
+        if (onSuccessCallback)
+          onSuccessCallback(data.body);
+      }, data => {
+        if (showLoading) this.alert.hideLoading();
+        if (onFailCallback) onFailCallback(data)
+      });
   }
 
   private getUrl(url: string): string {
     return this.BASE_URL + url
   }
 
-  private getHeaders(): HeaderAuth {
+  private getHeaders(): HttpHeaders {
     let json = localStorage.getItem('headerAuth');
-    let headerAuth: HeaderAuth = JSON.parse(json);
+
+    let headerAuth: HttpHeaders = null
+    try {
+      let objHeader = JSON.parse(json);
+      headerAuth = new HttpHeaders(objHeader);
+    }
+    catch (e) { }
 
     return headerAuth;
   }
 
-  private saveHeaders(headers: HeaderAuth) {
+  private saveHeaders(headers) {
     let json = JSON.stringify(headers);
     localStorage.setItem('headerAuth', json);
   }
 
-  private parseHeaders(obj) {
-    let headers = obj.headers;
-    let headerAuth: HeaderAuth;
-
-    headerAuth.access_token = headers['access_token'];
-    headerAuth.client_id = headers['client_id'];
-    headerAuth.uid = headers['uid'];
-
-    this.saveHeaders(headerAuth);
+  private parseHeaders(headers: HttpHeaders) {
+    let headerAuth: HttpHeaders = null
+    var tempHeader = {};
+    console.log('keys', headers.keys());
+    if (headers != undefined) {
+      tempHeader = {
+        'access_token': headers.get('access_token'),
+        'client_id': headers.get('client_id'),
+        'uid': headers.get('uid')
+      }
+    }
+    headerAuth = new HttpHeaders(tempHeader);
+    this.saveHeaders(tempHeader);
   }
 
 }
