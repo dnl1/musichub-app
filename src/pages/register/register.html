@@ -7,12 +7,46 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Register</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="createAccount-box">
+    <form (ngSubmit)="createAccount()" #registerForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
+            
+            <ion-item>
+              <ion-input type="text" placeholder="Name" name="name" [(ngModel)]="user.name" required></ion-input>
+            </ion-item>
 
+            <ion-item>
+              <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="user.email" required></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="password" placeholder="Confirmation Password" name="password" [(ngModel)]="user.confirmation_password" required></ion-input>
+              </ion-item>
+            
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Create account</button>
+          <button ion-button class="logion-btn" block clear type="button" (click)="redirectLogin()">Login</button>
+        </ion-col>
+      </ion-row>
+      
+    </form>
+  </div>
 </ion-content>

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
 import { EnvVariables } from "../../app/enviroment-variables/environment-variables.token";
 import { HttpClient } from '@angular/common/http';
 import { Alert } from '../../providers/alert/alert'
@@ -62,7 +62,7 @@ export class ApiConsume {
     if(showLoading) this.alert.showLoading();
     this.http.post(url, body, {
       headers: headers as any
-    }).subscribe(data => { if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
+    }).subscribe(data => { this.parseHeaders(data); if(showLoading)this.alert.hideLoading(); if(onSuccessCallback) onSuccessCallback(data) }, data => { if(showLoading)this.alert.hideLoading(); if(onFailCallback)onFailCallback(data) });
   }
 
   private getUrl(url: string): string {
@@ -81,7 +81,8 @@ export class ApiConsume {
     localStorage.setItem('headerAuth', json);
   }
 
-  private parseHeaders(headers) {
+  private parseHeaders(obj) {
+    let headers = obj.headers;
     let headerAuth: HeaderAuth;
 
     headerAuth.access_token = headers['access_token'];

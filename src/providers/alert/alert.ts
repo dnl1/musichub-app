@@ -12,6 +12,7 @@ import { Loading } from 'ionic-angular';
 @Injectable()
 export class Alert {
   loading: Loading;
+  buttonsDefault: ['OK'];
 
   constructor(private alertCtrl : AlertController, private loadingCtrl : LoadingController) {}
 
@@ -27,11 +28,19 @@ export class Alert {
     this.loading.dismiss();
   }
  
-  public showError(text) {
+  public showError(text, buttons : any = ['OK']) {
+    this.showAlert('Ops', text, buttons);
+  }
+
+  public showSuccess(text, buttons : any = ['OK']) {
+    this.showAlert('Success :)', text, buttons);
+  }
+
+  private showAlert(title, text, buttons) {
     let alert = this.alertCtrl.create({
-      title: 'Ops',
+      title: title,
       subTitle: text,
-      buttons: ['OK']
+      buttons: buttons
     });
     alert.present();
   }

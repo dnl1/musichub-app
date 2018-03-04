@@ -18,7 +18,6 @@ import { RegisterPage } from '../register/register';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  envVariables: object;
   user : User = new User();
   
   constructor(public nav: NavController, public navParams: NavParams, private auth: AuthService) {
@@ -30,7 +29,6 @@ export class LoginPage {
 
   public login(){
     this.auth.login(this.user).subscribe(allowed => {
-      console.log('allowed',allowed);
       if(allowed)
       {
         this.nav.push(TabsPage);

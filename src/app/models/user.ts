@@ -4,6 +4,7 @@ export class User {
   email: string;
   birth_date: string;
   password: string;
+  confirmation_password: string;
 
   /**
    *
@@ -11,6 +12,8 @@ export class User {
   constructor() {
     this.email = '';
     this.password = '';
+    this.confirmation_password = '';
+    this.name = '';
   }
 
   public save() {
@@ -20,11 +23,12 @@ export class User {
 
   public pop() {
     var json = localStorage.getItem('user');
-    var data = JSON.parse('user');
+    var data = JSON.parse(json);
 
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
     this.birth_date = data.birth_date;
+    this.confirmation_password = data.confirmation_password;
   }
 }
