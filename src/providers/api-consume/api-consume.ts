@@ -59,9 +59,7 @@ export class ApiConsume {
 
   private request(method: string, pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
     let url = this.getUrl(pUrl);
-    console.log('url', url);
     let headers = this.getHeaders();
-    console.log('headers', headers);
     if (showLoading) this.alert.showLoading();
     this.http.request(method, url, {
       body: body,
@@ -76,7 +74,10 @@ export class ApiConsume {
       }, data => {
         if (showLoading) this.alert.hideLoading();
         if (onFailCallback) onFailCallback(data);
-        { console.log('Request Error', data); }
+        console.log('Request Error', data);
+        if (data.error.Message) {
+          this.alert.showError(data.error.Message);
+        }
       });
   }
 
@@ -87,12 +88,15 @@ export class ApiConsume {
   private getHeaders(): HttpHeaders {
     let json = localStorage.getItem('headerAuth');
 
-    let headerAuth: HttpHeaders = null
+    let headerAuth: HttpHeaders = new HttpHeaders();
+
     try {
       let objHeader = JSON.parse(json);
       headerAuth = new HttpHeaders(objHeader);
     }
     catch (e) { }
+
+    headerAuth.set('Content-Type', 'application/json');
 
     return headerAuth;
   }
