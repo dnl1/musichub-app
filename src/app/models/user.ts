@@ -14,6 +14,9 @@ export class User {
     this.password = '';
     this.confirmation_password = '';
     this.name = '';
+    this.birth_date = '';
+
+    this.pop();
   }
 
   public save() {
@@ -25,10 +28,14 @@ export class User {
     var json = localStorage.getItem('user');
     var data = JSON.parse(json);
 
-    this.id = data.id;
-    this.name = data.name;
-    this.email = data.email;
-    this.birth_date = data.birth_date;
-    this.confirmation_password = data.confirmation_password;
+    console.log('data',data);
+    if(data != null)
+    {
+      this.id = data.id;
+      this.name = data.name;
+      this.email = data.email;
+      this.birth_date = data.birth_date;
+      this.confirmation_password = data.confirmation_password;
+    }
   }
 }

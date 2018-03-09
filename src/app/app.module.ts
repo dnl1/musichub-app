@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -16,7 +16,10 @@ import { EnvironmentsModule } from './enviroment-variables/environment-variables
 import { RegisterPageModule } from '../pages/register/register.module';
 import { ApiConsume } from '../providers/api-consume/api-consume';
 import { Alert } from '../providers/alert/alert';
-import { RegisterPage } from '../pages/register/register';
+import { MusiciansPage } from '../pages/musicians/musicians';
+import { PeoplePage } from '../pages/people/people';
+import { ProfilePage } from '../pages/profile/profile';
+import { ProjectsPage } from '../pages/projects/projects';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,10 @@ import { RegisterPage } from '../pages/register/register';
     AboutPage,
     ContactPage,
     HomePage,
+    MusiciansPage,
+    PeoplePage,
+    ProfilePage,
+    ProjectsPage,
     TabsPage
   ],
   imports: [
@@ -39,6 +46,10 @@ import { RegisterPage } from '../pages/register/register';
     AboutPage,
     ContactPage,
     HomePage,
+    MusiciansPage,
+    PeoplePage,
+    ProfilePage,
+    ProjectsPage,
     TabsPage
   ],
   providers: [

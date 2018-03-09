@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../app/models/user';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
 import { Alert } from '../../providers/alert/alert'
-import { Inject, Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
 
 /**;;
  * Generated class for the RegisterPage page.

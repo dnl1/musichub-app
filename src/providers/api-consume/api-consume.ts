@@ -45,36 +45,38 @@ export class ApiConsume {
     this.BASE_URL = envVars.apiEndpoint;
   }
 
-  public get(pUrl: string, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
-    let url = this.getUrl(pUrl);
-    let headers = this.getHeaders()
-
-    if (showLoading) this.alert.showLoading();
-    this.http.get(url, {
-      headers: headers,
-      observe: 'response'
-    }).subscribe(data => { if (showLoading) this.alert.hideLoading(); if (onSuccessCallback) onSuccessCallback(data.body) }, data => { if (showLoading) this.alert.hideLoading(); if (onFailCallback) onFailCallback(data) });
+  public get(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
+    this.request('post', pUrl, body, onSuccessCallback, onFailCallback, showLoading);
   }
 
   public post(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
-    let url = this.getUrl(pUrl);
-    let headers = this.getHeaders();
+    this.request('post', pUrl, body, onSuccessCallback, onFailCallback, showLoading);
+  }
 
+  public put(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
+    this.request('put', pUrl, body, onSuccessCallback, onFailCallback, showLoading);
+  }
+
+  private request(method: string, pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
+    let url = this.getUrl(pUrl);
+    console.log('url', url);
+    let headers = this.getHeaders();
+    console.log('headers', headers);
     if (showLoading) this.alert.showLoading();
-    this.http.post(url, body, {
+    this.http.request(method, url, {
+      body: body,
       headers: headers,
       observe: 'response'
     })
       .subscribe(data => {
-        console.log('data', data);
-        console.log(data.headers.get('access_token'))
         this.parseHeaders(data.headers);
         if (showLoading) this.alert.hideLoading();
         if (onSuccessCallback)
           onSuccessCallback(data.body);
       }, data => {
         if (showLoading) this.alert.hideLoading();
-        if (onFailCallback) onFailCallback(data)
+        if (onFailCallback) onFailCallback(data);
+        { console.log('Request Error', data); }
       });
   }
 
@@ -103,11 +105,10 @@ export class ApiConsume {
   private parseHeaders(headers: HttpHeaders) {
     let headerAuth: HttpHeaders = null
     var tempHeader = {};
-    console.log('keys', headers.keys());
     if (headers != undefined) {
       tempHeader = {
         'access_token': headers.get('access_token'),
-        'client_id': headers.get('client_id'),
+        'client': headers.get('client'),
         'uid': headers.get('uid')
       }
     }

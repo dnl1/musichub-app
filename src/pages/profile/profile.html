@@ -7,12 +7,38 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form (ngSubmit)="put()" #editUserForm="ngForm">
+    <ion-item>
+      <ion-input [(ngModel)]="user.name" name="name" required placeholder="Name"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-input type="email" readonly name="email" [(ngModel)]="user.email" placeholder="E-mail"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="birth_date" placeholder="Birthdate" [(ngModel)]="user.birth_date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="user.password" name="password" placeholder="Password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="user.confimation_password" placeholder="Confirmation Password" name="confirmation_password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-row>
+        <ion-col class="submit-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!editUserForm.form.valid">Update</button>
+        </ion-col>
+      </ion-row>
+  </form>
 </ion-content>
