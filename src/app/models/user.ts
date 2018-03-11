@@ -28,7 +28,6 @@ export class User {
     var json = localStorage.getItem('user');
     var data = JSON.parse(json);
 
-    console.log('data',data);
     if(data != null)
     {
       this.id = data.id;

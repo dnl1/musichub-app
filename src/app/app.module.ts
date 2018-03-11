@@ -20,6 +20,7 @@ import { MusiciansPage } from '../pages/musicians/musicians';
 import { PeoplePage } from '../pages/people/people';
 import { ProfilePage } from '../pages/profile/profile';
 import { ProjectsPage } from '../pages/projects/projects';
+import { NewProjectPage } from '../pages/new-project/new-project';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProjectsPage } from '../pages/projects/projects';
     PeoplePage,
     ProfilePage,
     ProjectsPage,
+    NewProjectPage,
     TabsPage
   ],
   imports: [

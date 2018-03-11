@@ -5,6 +5,7 @@ import { LoginPage } from '../login/login';
 import { ProfilePage } from '../profile/profile';
 import { ProjectsPage } from '../projects/projects';
 import { MusiciansPage } from '../musicians/musicians';
+import { NewProjectPage } from '../new-project/new-project';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -12,9 +13,10 @@ import { MusiciansPage } from '../musicians/musicians';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = ProfilePage;
-  tab3Root = ProjectsPage;
+  tab2Root = ProjectsPage;
+  tab3Root = NewProjectPage;
   tab4Root = MusiciansPage;
+  tab5Root = ProfilePage;
   
   /**
    * logout

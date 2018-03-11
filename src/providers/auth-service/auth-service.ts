@@ -30,7 +30,6 @@ export class AuthService {
       else {
         localStorage.clear(); //FODASE
         this.apiConsume.post('login', { email: user.email, password: user.password }, (data: any): void => {
-        console.log('data', data);
         let usuario: User = new User();
           usuario.name = data.name;
           usuario.email = data.email;
