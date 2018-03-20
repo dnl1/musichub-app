@@ -52,6 +52,7 @@ import { NewProjectPage } from '../pages/new-project/new-project';
     PeoplePage,
     ProfilePage,
     ProjectsPage,
+    NewProjectPage,
     TabsPage
   ],
   providers: [

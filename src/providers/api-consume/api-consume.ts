@@ -46,7 +46,7 @@ export class ApiConsume {
   }
 
   public get(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {
-    this.request('post', pUrl, body, onSuccessCallback, onFailCallback, showLoading);
+    this.request('get', pUrl, body, onSuccessCallback, onFailCallback, showLoading);
   }
 
   public post(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {

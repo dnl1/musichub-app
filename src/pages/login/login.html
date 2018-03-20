@@ -4,8 +4,16 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<section ng-include="'components/header/header.html'">
-
+<!-- <section ng-include="'components/header/header.html'"> -->
+  <ion-header>
+      <ion-navbar>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>MusicHub</ion-title>
+      </ion-navbar>
+    </ion-header>
+    
 <ion-content class="login-content" padding>
   <div class="login-box">
     <form (ngSubmit)="login()" #registerForm="ngForm">
