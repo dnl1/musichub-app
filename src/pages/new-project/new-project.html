@@ -14,5 +14,28 @@
   </ion-header>
 
 <ion-content padding>
+  <form (ngSubmit)="post()" #formulario="ngForm">
+    <input type="hidden" name="owner_id" [(ngModel)]="user.id"/>
+    <ion-item>
+      <ion-input [(ngModel)]="project.name" name="name" required placeholder="Name"></ion-input>
+    </ion-item>
 
+    <ion-item>
+        <ion-select [(ngModel)]="project.musical_genre_id" name="musical_genre_id" placeholder="Musical Genre">
+          <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-select [(ngModel)]="selectedInstruments" name="selectedInstruments" placeholder="Instruments" multiple>
+          <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-row>
+      <ion-col class="submit-col">
+        <button ion-button class="submit-btn" full type="submit" [disabled]="!formulario.form.valid">Create</button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
