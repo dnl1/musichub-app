@@ -5,31 +5,44 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>MusicHub</ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>MusicHub</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
   <form (ngSubmit)="post()" #formulario="ngForm">
-    <input type="hidden" name="owner_id" [(ngModel)]="user.id"/>
+    <input type="hidden" name="owner_id" [(ngModel)]="user.id" />
     <ion-item>
       <ion-input [(ngModel)]="project.name" name="name" required placeholder="Name"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-select [(ngModel)]="project.musical_genre_id" name="musical_genre_id" placeholder="Musical Genre">
-          <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
-        </ion-select>
+      <ion-select [(ngModel)]="project.musical_genre_id" name="musical_genre_id" placeholder="Musical Genre">
+        <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
-        <ion-select [(ngModel)]="selectedInstruments" name="selectedInstruments" placeholder="Instruments" multiple>
-          <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
-        </ion-select>
+      <ion-select [(ngModel)]="base_instrument_id" name="base_instrument_id" placeholder="Base Instrument">
+        <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select [(ngModel)]="selectedInstruments" name="selectedInstruments" placeholder="Additional Instruments" multiple>
+        <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button icon-left type="button" (click)="startRecording()">
+        <ion-icon name="microphone"></ion-icon>
+        Start recording
+      </button>
     </ion-item>
 
     <ion-row>

@@ -21,6 +21,7 @@ import { PeoplePage } from '../pages/people/people';
 import { ProfilePage } from '../pages/profile/profile';
 import { ProjectsPage } from '../pages/projects/projects';
 import { NewProjectPage } from '../pages/new-project/new-project';
+import { MediaCapture } from '@ionic-native/media-capture';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { NewProjectPage } from '../pages/new-project/new-project';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     ApiConsume,
-    Alert
+    Alert,
+    MediaCapture
   ]
 })
 export class AppModule {}

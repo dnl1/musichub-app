@@ -5,6 +5,9 @@ import { User } from '../../app/models/user';
 import { MusicalProject } from '../../app/models/musical-project';
 import { MusicalGenre } from '../../app/models/musical-genre';
 import { Instrument } from '../../app/models/instrument';
+import { Alert } from "../../providers/alert/alert";
+import { Inject } from '@angular/core';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 
 /**
  * Generated class for the NewProjectPage page.
@@ -24,13 +27,21 @@ export class NewProjectPage {
   instruments: Instrument[] = new Array<Instrument>();
   selectedInstruments: Instrument[] = new Array<Instrument>();
   apiConsume: ApiConsume
+  base_instrument_id: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, apiConsume: ApiConsume) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, apiConsume: ApiConsume, @Inject(Alert) private alert : Alert, private mediaCapture: MediaCapture) {
     this.user.pop();
     this.apiConsume = apiConsume;
 
     this.getMusicalGenres();
-    this.getInstruments();
+  }
+
+  startRecording() {
+    this.mediaCapture.captureAudio({duration: 8}).then((data: MediaFile[]) => {
+        console.log('mediaFile', data)
+    }, (err) => {
+        console.error(err);
+    });
   }
 
   getMusicalGenres() {
@@ -42,8 +53,10 @@ export class NewProjectPage {
         genre.name = element.name;
 
         this.musical_genres.push(genre);
+        
       });
 
+      this.getInstruments();
 
     }, (error: any): void => {
 
@@ -60,8 +73,6 @@ export class NewProjectPage {
 
         this.instruments.push(instrument);
       });
-      console.log('data', data);
-      console.log('instruments', this.instruments);
     }, (error: any): void => {
 
     }, false);

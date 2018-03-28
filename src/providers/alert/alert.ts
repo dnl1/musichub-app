@@ -21,11 +21,11 @@ export class Alert {
       content: 'Carregando...',
       dismissOnPageChange: true
     });
+
     this.loading.present();
   }
 
   public hideLoading() {
-    this.loading.dismiss();
   }
  
   public showError(text, buttons : any = ['OK']) {
