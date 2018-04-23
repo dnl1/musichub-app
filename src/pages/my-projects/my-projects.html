@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ProjectsPage page.
+  Generated template for the MyProjectsPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -12,9 +12,12 @@
     <ion-title>MusicHub</ion-title>
   </ion-navbar>
 </ion-header>
-  
-<ion-content padding>
-  <button ion-button class="" full (click)="myProjectsClick()">My projects</button>
-  <button ion-button color="secondary" full (click)="searchProjectsClick()">Search projects</button>
 
+<ion-content padding>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="onItemClick(item.id)">
+      {{ item.name }}
+    </ion-item>
+  </ion-list>
 </ion-content>

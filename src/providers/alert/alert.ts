@@ -26,6 +26,7 @@ export class Alert {
   }
 
   public hideLoading() {
+    this.loading.dismiss();
   }
  
   public showError(text, buttons : any = ['OK']) {

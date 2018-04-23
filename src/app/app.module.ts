@@ -17,11 +17,11 @@ import { RegisterPageModule } from '../pages/register/register.module';
 import { ApiConsume } from '../providers/api-consume/api-consume';
 import { Alert } from '../providers/alert/alert';
 import { MusiciansPage } from '../pages/musicians/musicians';
-import { PeoplePage } from '../pages/people/people';
 import { ProfilePage } from '../pages/profile/profile';
 import { ProjectsPage } from '../pages/projects/projects';
 import { NewProjectPage } from '../pages/new-project/new-project';
 import { MediaCapture } from '@ionic-native/media-capture';
+import { MyProjectsPage } from '../pages/my-projects/my-projects';
 
 @NgModule({
   declarations: [
@@ -30,10 +30,10 @@ import { MediaCapture } from '@ionic-native/media-capture';
     ContactPage,
     HomePage,
     MusiciansPage,
-    PeoplePage,
     ProfilePage,
     ProjectsPage,
     NewProjectPage,
+    MyProjectsPage,
     TabsPage
   ],
   imports: [
@@ -50,10 +50,10 @@ import { MediaCapture } from '@ionic-native/media-capture';
     ContactPage,
     HomePage,
     MusiciansPage,
-    PeoplePage,
     ProfilePage,
     ProjectsPage,
     NewProjectPage,
+    MyProjectsPage,
     TabsPage
   ],
   providers: [

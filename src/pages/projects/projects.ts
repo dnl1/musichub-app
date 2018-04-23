@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { MyProjectsPage } from '../my-projects/my-projects';
 
 /**
  * Generated class for the ProjectsPage page.
@@ -17,8 +18,11 @@ export class ProjectsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProjectsPage');
+  public myProjectsClick(){
+    this.navCtrl.push(MyProjectsPage);
   }
 
+  public searchProjectsClick(){
+    console.log('click searchProjectsClick');
+  }
 }

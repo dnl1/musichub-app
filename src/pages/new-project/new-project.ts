@@ -36,12 +36,17 @@ export class NewProjectPage {
     this.getMusicalGenres();
   }
 
-  startRecording() {
-    this.mediaCapture.captureAudio({duration: 8}).then((data: MediaFile[]) => {
-        console.log('mediaFile', data)
-    }, (err) => {
-        console.error(err);
+  post(){
+    var model : any = this.project;
+
+    model.instruments = this.instruments.map((instrument) => {
+      return instrument.id;
     });
+    model.base_instrument_id = this.base_instrument_id;
+
+    this.apiConsume.post('/musicalproject/create', model, (data) => {
+
+    }, null)
   }
 
   getMusicalGenres() {
