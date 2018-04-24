@@ -22,6 +22,7 @@ import { ProjectsPage } from '../pages/projects/projects';
 import { NewProjectPage } from '../pages/new-project/new-project';
 import { MediaCapture } from '@ionic-native/media-capture';
 import { MyProjectsPage } from '../pages/my-projects/my-projects';
+import { SearchProjectsPage } from '../pages/search-projects/search-projects';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MyProjectsPage } from '../pages/my-projects/my-projects';
     ProjectsPage,
     NewProjectPage,
     MyProjectsPage,
+    SearchProjectsPage,    
     TabsPage
   ],
   imports: [
@@ -41,7 +43,7 @@ import { MyProjectsPage } from '../pages/my-projects/my-projects';
     IonicModule.forRoot(MyApp),
     EnvironmentsModule,
     RegisterPageModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,6 +56,7 @@ import { MyProjectsPage } from '../pages/my-projects/my-projects';
     ProjectsPage,
     NewProjectPage,
     MyProjectsPage,
+    SearchProjectsPage,
     TabsPage
   ],
   providers: [

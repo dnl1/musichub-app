@@ -75,7 +75,7 @@ export class ApiConsume {
         if (showLoading) this.alert.hideLoading();
         if (onFailCallback) onFailCallback(data);
         console.log('Request Error', data);
-        if (data.error.Message) {
+        if (data.error && data.error.Message) {
           this.alert.showError(data.error.Message);
         }
       });

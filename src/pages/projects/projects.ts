@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MyProjectsPage } from '../my-projects/my-projects';
+import { SearchProjectsPage } from '../search-projects/search-projects';
 
 /**
  * Generated class for the ProjectsPage page.
@@ -23,6 +24,6 @@ export class ProjectsPage {
   }
 
   public searchProjectsClick(){
-    console.log('click searchProjectsClick');
+    this.navCtrl.push(SearchProjectsPage);
   }
 }

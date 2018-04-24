@@ -21,6 +21,7 @@ export class LoginPage {
   user : User = new User();
   
   constructor(public nav: NavController, public navParams: NavParams, private auth: AuthService) {
+    localStorage.clear();
   }
 
   public createAccount() {
