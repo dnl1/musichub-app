@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
+import { ProjectDetailPage } from '../project-detail/project-detail';
 
 /**
  * Generated class for the MyProjectsPage page.
@@ -28,7 +29,7 @@ export class MyProjectsPage {
   }
 
   onItemClick(item : any) {
-    console.log(item);
+    this.navCtrl.push(ProjectDetailPage, { musical_project_id: item });
   }
 
   getItems(ev: any) {

@@ -5,14 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar>
-      <button ion-button icon-only menuToggle>
+  <ion-navbar>
+    <ion-title>MusicHub</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>MusicHub</ion-title>
-    </ion-navbar>
-  </ion-header>
-  
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
 <ion-content padding>
   <form (ngSubmit)="put()" #editUserForm="ngForm">
     <ion-item>
@@ -24,7 +28,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-datetime displayFormat="DD/MM/YYYY" name="birth_date" placeholder="Birthdate" [(ngModel)]="user.birth_date"></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" name="birth_date" placeholder="Birthdate" [(ngModel)]="user.birth_date"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -36,9 +40,9 @@
     </ion-item>
 
     <ion-row>
-        <ion-col class="submit-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!editUserForm.form.valid">Update</button>
-        </ion-col>
-      </ion-row>
+      <ion-col class="submit-col">
+        <button ion-button class="submit-btn" full type="submit" [disabled]="!editUserForm.form.valid">Update</button>
+      </ion-col>
+    </ion-row>
   </form>
 </ion-content>

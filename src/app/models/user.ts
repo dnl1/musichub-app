@@ -9,14 +9,16 @@ export class User {
   /**
    *
    */
-  constructor() {
+  constructor(pop: boolean = true) {
     this.email = '';
     this.password = '';
     this.confirmation_password = '';
     this.name = '';
     this.birth_date = '';
 
-    this.pop();
+    if (pop) {
+      this.pop();
+    }
   }
 
   public save() {
@@ -28,8 +30,7 @@ export class User {
     var json = localStorage.getItem('user');
     var data = JSON.parse(json);
 
-    if(data != null)
-    {
+    if (data != null) {
       this.id = data.id;
       this.name = data.name;
       this.email = data.email;

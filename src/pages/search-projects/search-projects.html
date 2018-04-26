@@ -15,7 +15,7 @@
 
 
 <ion-content padding>
-  <ion-select name="musical_genre_id" (ionChange)="search($event)" placeholder="Select musical genre" full>
+  <ion-select name="musical_genre_id" id="musical_genre_id" (ionChange)="search($event)" placeholder="Select musical genre" full>
       <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
     </ion-select>
   <ion-list>

@@ -4,6 +4,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http'
 import { MyApp } from './app.component';
 
+// Import ionic2-rating module
+import { Ionic2RatingModule } from 'ionic2-rating';
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -23,6 +26,9 @@ import { NewProjectPage } from '../pages/new-project/new-project';
 import { MediaCapture } from '@ionic-native/media-capture';
 import { MyProjectsPage } from '../pages/my-projects/my-projects';
 import { SearchProjectsPage } from '../pages/search-projects/search-projects';
+import { MusicianDetailsPage } from '../pages/musician-details/musician-details';
+import { ProjectDetailPage } from '../pages/project-detail/project-detail';
+import { ContributionsPage } from '../pages/contributions/contributions';
 
 @NgModule({
   declarations: [
@@ -35,7 +41,10 @@ import { SearchProjectsPage } from '../pages/search-projects/search-projects';
     ProjectsPage,
     NewProjectPage,
     MyProjectsPage,
+    MusicianDetailsPage,
     SearchProjectsPage,    
+    ProjectDetailPage,
+    ContributionsPage,    
     TabsPage
   ],
   imports: [
@@ -44,6 +53,7 @@ import { SearchProjectsPage } from '../pages/search-projects/search-projects';
     EnvironmentsModule,
     RegisterPageModule,
     HttpClientModule,
+    Ionic2RatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +66,10 @@ import { SearchProjectsPage } from '../pages/search-projects/search-projects';
     ProjectsPage,
     NewProjectPage,
     MyProjectsPage,
+    MusicianDetailsPage,
     SearchProjectsPage,
+    ProjectDetailPage,
+    ContributionsPage,    
     TabsPage
   ],
   providers: [

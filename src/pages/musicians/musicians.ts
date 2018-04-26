@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
+import { User } from '../../app/models/user';
+import { ActionSheetController } from 'ionic-angular';
+import { MusicianDetailsPage } from '../musician-details/musician-details';
 
 /**
  * Generated class for the MusiciansPage page.
@@ -17,17 +20,43 @@ export class MusiciansPage {
   items : Array<string> = new Array<string>();
   fullItems : any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume: ApiConsume) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume: ApiConsume, public actionSheetCtrl: ActionSheetController) {
     this.apiConsume.get("/musician", {}, (data) =>{
+      let user : User = new User();
+      user.pop();
+
       data.forEach(element => {
-        this.items.push(element.name);
+        if(user.id != element.id)
+          this.items.push(element);
       });
       this.fullItems = this.items;      
     }, (err) => {
       console.log('err',err);
     }, false)
+  }
 
-    
+  onItemClick(item : any) {
+    this.navCtrl.push(MusicianDetailsPage, {
+      musicianId: item
+    });
+  }
+
+  presentActionSheet(id : number) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Ações',
+      buttons: [
+        {
+          text: 'Rate musician',
+          role: 'rate',
+          handler: () => {
+            this.navCtrl.push(MusicianDetailsPage, {
+              musicianId: id
+            })
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   getItems(ev: any) {

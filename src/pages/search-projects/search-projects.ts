@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
 import { MusicalGenre } from '../../app/models/musical-genre';
+import { MusicianDetailsPage } from '../musician-details/musician-details';
+import { ProjectDetailPage } from '../project-detail/project-detail';
 
 /**
  * Generated class for the SearchProjectsPage page.
@@ -24,7 +26,7 @@ export class SearchProjectsPage {
   }
 
   onItemClick(item : any) {
-    console.log(item);
+    this.navCtrl.push(ProjectDetailPage, { musical_project_id: item })
   }
 
   search(val : any)
