@@ -42,7 +42,7 @@ export class ApiConsume {
 
   private BASE_URL: string
   constructor(@Inject(EnvVariables) private envVars, @Inject(HttpClient) private http: HttpClient, @Inject(Alert) private alert: Alert) {
-    this.BASE_URL = envVars.apiEndpoint;
+    this.BASE_URL = this.envVars.apiEndpoint;
   }
 
   public get(pUrl: string, body: any, onSuccessCallback, onFailCallback, showLoading: boolean = true) {

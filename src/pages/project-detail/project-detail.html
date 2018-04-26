@@ -40,9 +40,12 @@
   </ion-list>
 
   <ion-list inset [class.hide]="!showContributions">
-      <ion-label>Select an instrument:</ion-label>
-      <button ion-item *ngFor="let item of instruments" (click)="onContributeInstrumentClick(item)">
-        {{ item.name }}
-      </button>
-    </ion-list>
+    <ion-label>Select an instrument:</ion-label>
+    <button ion-item *ngFor="let item of instruments" [color]="item.color" (click)="onContributeInstrumentClick(item)" style="width: 100%;">
+      {{ item.name }}
+    </button>
+  </ion-list>
+
+  <button ion-button full color="danger" [class.hide]="hideFinishButton" (click)="onFinishProjectClick()">Finish project</button>
+  <button ion-button full color="light" [class.hide]="hidePlayAudio" (click)="onPlayAudioClick()">Play audio</button>
 </ion-content>

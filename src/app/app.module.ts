@@ -29,6 +29,10 @@ import { SearchProjectsPage } from '../pages/search-projects/search-projects';
 import { MusicianDetailsPage } from '../pages/musician-details/musician-details';
 import { ProjectDetailPage } from '../pages/project-detail/project-detail';
 import { ContributionsPage } from '../pages/contributions/contributions';
+import { DownloadAndPlayProvider } from '../providers/download-and-play/download-and-play';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Media } from '@ionic-native/media';
 
 @NgModule({
   declarations: [
@@ -79,7 +83,11 @@ import { ContributionsPage } from '../pages/contributions/contributions';
     AuthService,
     ApiConsume,
     Alert,
-    MediaCapture
+    MediaCapture,
+    FileTransfer,
+    File,
+    Media,
+    DownloadAndPlayProvider
   ]
 })
 export class AppModule {}
