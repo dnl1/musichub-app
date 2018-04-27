@@ -7,7 +7,7 @@ import { MusicalGenre } from '../../app/models/musical-genre';
 import { Instrument } from '../../app/models/instrument';
 import { Alert } from "../../providers/alert/alert";
 import { Inject } from '@angular/core';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { MediaCapture } from '@ionic-native/media-capture';
 import { MyProjectsPage } from '../my-projects/my-projects';
 
 /**
@@ -45,13 +45,13 @@ export class NewProjectPage {
     });
     model.base_instrument_id = this.base_instrument_id;
 
-    this.apiConsume.post('/musicalproject/create', model, (data) => {
+    this.apiConsume.post('musicalproject/create', model, (data) => {
       this.navCtrl.push(MyProjectsPage);
     }, null)
   }
 
   getMusicalGenres() {
-    this.apiConsume.get('/musicalgenre', undefined, (data: any): void => {
+    this.apiConsume.get('musicalgenre', undefined, (data: any): void => {
       data.forEach(element => {
         let genre = new MusicalGenre();
 
@@ -70,7 +70,7 @@ export class NewProjectPage {
   }
 
   getInstruments() {
-    this.apiConsume.get('/instrument', undefined, (data: any): void => {
+    this.apiConsume.get('instrument', undefined, (data: any): void => {
       data.forEach(element => {
         let instrument = new Instrument();
 

@@ -49,7 +49,6 @@ export class ProjectDetailPage {
 
       this.getOwner(data.owner_id);
       this.getMusicalGenre(data.musical_genre_id);
-      this.getProjectInstruments();
     }, null, false);
   }
 
@@ -58,11 +57,16 @@ export class ProjectDetailPage {
       this.owner = data;
       if (this.owner.id != new User().id) {
         this.ownProject = false;
+        this.getProjectInstruments();
+
       }
       else {
         this.apiConsume.get(`musicalproject/${this.project.id}/contributions`, {}, (data) => {
+          console.log(JSON.stringify(data));
           this.showContributions = data && data.length > 0;
           this.contributions = data;
+
+          this.getProjectInstruments();
         }, null, false);
       }
 
@@ -114,15 +118,14 @@ export class ProjectDetailPage {
         }
       });
 
+      console.log('this.showContributions', this.showContributions);
       //CONFIG HIGHLIGHT
       if (this.showContributions) {
         var allApproved = true;
 
         this.contributions.forEach((item) => {
           if (item.status_id == 2) {
-            console.log('item status 2', item);
             this.instruments.forEach((listItem) => {
-              console.log('listItem', listItem);
               listItem.color = 'secondary'
             })
           }
@@ -132,6 +135,8 @@ export class ProjectDetailPage {
 
           if (this.hidePlayAudio)
             this.hideFinishButton = !allApproved
+
+          console.log('this.hideFinishButton', this.hideFinishButton);
         });
       }
 
@@ -181,7 +186,8 @@ export class ProjectDetailPage {
 
   onPlayAudioClick() {
     var url = `${this.envVars.apiEndpoint}musicalproject/${this.project.id}/download`;
-    this.downloadAndPlay.download(url)
+    console.log(url);
+    this.downloadAndPlay.download(url, this.project.id);
   }
 
 }

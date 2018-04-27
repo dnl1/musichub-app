@@ -14,18 +14,20 @@ export class DownloadAndPlayProvider {
 
   constructor(public file: File, public txfr: FileTransfer, public audio: Media) { }
 
-  public download(url: string) {
+  public download(url: string, id: number) {
     let ft: FileTransferObject = this.txfr.create();
-    let fn = this.file.dataDirectory + url.substring(url.lastIndexOf('/') + 1);
-
+    let fn = this.file.dataDirectory + id.toString() + '.mp3';
+    console.log('fn', fn);
     let options = {
       headers: this.getHeaders()
     };
 
+    console.log('start download');
     ft.download(url, fn, true, options).then(
       (fe: FileEntry) => {
-        console.log('fe', fe);
+        console.log('fe', JSON.stringify(fe));
         let song: MediaObject = this.audio.create(fe.nativeURL);
+        console.log('song', JSON.stringify(song));
         song.play();
       },
       err => {

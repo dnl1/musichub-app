@@ -75,7 +75,8 @@ export class ApiConsume {
         this.parseHeaders(data.headers);
         if (showLoading) this.alert.hideLoading();
         if (onFailCallback) onFailCallback(data);
-        console.log('Request Error', data);
+        console.log('Request Error', JSON.stringify(data));
+        console.log('URL', url);
         if (data.error && data.error.Message) {
           this.alert.showError(data.error.Message);
         }

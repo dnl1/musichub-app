@@ -18,7 +18,7 @@ export class Alert {
 
   public showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Carregando...',
+      content: 'Loading...',
       dismissOnPageChange: true
     });
 
