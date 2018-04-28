@@ -62,7 +62,6 @@ export class ProjectDetailPage {
       }
       else {
         this.apiConsume.get(`musicalproject/${this.project.id}/contributions`, {}, (data) => {
-          console.log(JSON.stringify(data));
           this.showContributions = data && data.length > 0;
           this.contributions = data;
 
@@ -85,59 +84,70 @@ export class ProjectDetailPage {
     }, null, false);
   }
 
-  getInstruments(instruments) {
+  getInstruments(musicalProjectInstruments) {
     this.apiConsume.get('instrument', undefined, (data: any): void => {
-      var filteredData = data.filter((item) => {
+
+      // PEGA A CORRELACAO DO INSTRUMENTO BASE
+      var base_instrument = musicalProjectInstruments.filter((item) => {
+        return item.is_base_instrument;
+      })[0];
+
+      //MONTA OBJETO QUE MOSTRARA NA TELA
+      data.filter((item) => {
         let retorno: boolean = false;
 
-        instruments.forEach(element => {
+        musicalProjectInstruments.forEach(element => {
           if (element.instrument_id == item.id && !element.is_base_instrument)
             retorno = true;
         });
         return retorno;
-      });
+      }).
+        forEach(element => {
+          var instrument = {
+            id: element.id,
+            name: element.name,
+            color: 'default'
+          };
 
-      var base_instrument = instruments.filter((item) => {
-        return item.is_base_instrument;
-      })[0];
+          this.instruments.push(instrument);
+        });
 
-      filteredData.forEach(element => {
-        var instrument = {
-          id: element.id,
-          name: element.name,
-          musical_project_instrument_id: element.musical_project_instrument_id,
-          color: 'default'
-        };
-
-        this.instruments.push(instrument);
-      });
-
+      //SETA O INSTRUMENTO BASE
       data.forEach((item) => {
         if (item.id == base_instrument.instrument_id) {
           this.baseInstrument = item;
         }
       });
 
-      console.log('this.showContributions', this.showContributions);
       //CONFIG HIGHLIGHT
       if (this.showContributions) {
-        var allApproved = true;
+        var qtInstruments = musicalProjectInstruments.length
+        var qtContributionsOK = 0;
 
         this.contributions.forEach((item) => {
           if (item.status_id == 2) {
-            this.instruments.forEach((listItem) => {
+
+            let mpi = musicalProjectInstruments.filter((item1) => {
+              return item1.id == item.musical_project_instrument_id;
+            })[0];
+
+            var filteredInstruments = this.instruments.filter((item1) => {
+              return item1.id == mpi.instrument_id;
+            });
+
+            filteredInstruments.forEach((listItem) => {
               listItem.color = 'secondary'
             })
-          }
-          else {
-            allApproved = false;
-          }
 
-          if (this.hidePlayAudio)
-            this.hideFinishButton = !allApproved
 
-          console.log('this.hideFinishButton', this.hideFinishButton);
+            qtContributionsOK++;
+          }
         });
+
+        //SO APRESENTA O BOTAO DE FINALIZAR SE A QTD DE CONTRIBUIÇOES APROVADAS FOR A MESMA DE INSTRUMENTOS 
+        if (qtInstruments == qtContributionsOK && this.project.finish != 1) {
+          this.hideFinishButton = false;
+        }
       }
 
     }, (error: any): void => {
@@ -175,7 +185,9 @@ export class ProjectDetailPage {
         }
       ]
     });
-    actionSheet.present();
+
+    if(this.project.finish != 1)
+      actionSheet.present();
   }
 
   onFinishProjectClick() {
@@ -186,7 +198,6 @@ export class ProjectDetailPage {
 
   onPlayAudioClick() {
     var url = `${this.envVars.apiEndpoint}musicalproject/${this.project.id}/download`;
-    console.log(url);
     this.downloadAndPlay.download(url, this.project.id);
   }
 

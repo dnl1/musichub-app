@@ -8,7 +8,7 @@
   <ion-navbar>
     <ion-title>MusicHub</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only menuToggle="right">
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
@@ -42,6 +42,7 @@
     <ion-row>
       <ion-col class="submit-col">
         <button ion-button class="submit-btn" full type="submit" [disabled]="!editUserForm.form.valid">Update</button>
+        <button ion-button class="submit-btn" color="danger" full (click)="onLogoutClick()" type="button">Logout</button>
       </ion-col>
     </ion-row>
   </form>
