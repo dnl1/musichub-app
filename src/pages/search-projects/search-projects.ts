@@ -18,24 +18,30 @@ import { ProjectDetailPage } from '../project-detail/project-detail';
 })
 export class SearchProjectsPage {
 
-  items : any = [];
+  items: any = [];
+  showMessageNotFound: boolean = false;
   musical_genres: Array<MusicalGenre> = new Array<MusicalGenre>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume : ApiConsume) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume: ApiConsume) {
     this.getMusicalGenres();
   }
 
-  onItemClick(item : any) {
+  onItemClick(item: any) {
     this.navCtrl.push(ProjectDetailPage, { musical_project_id: item })
   }
 
-  search(val : any)
-  {
+  search(val: any) {
     this.apiConsume.post('musicalproject/search-by-musical-genre', { musical_genre_id: val }, (data) => {
       this.items = [];
       data.forEach(element => {
         this.items.push(element);
       });
+      console.log('this.items.length', this.items.length);
+      if (this.items.length == 0) {
+        this.showMessageNotFound = true;
+      } else {
+        this.showMessageNotFound = false;
+      }
     }, null, false);
   }
 
@@ -48,7 +54,7 @@ export class SearchProjectsPage {
         genre.name = element.name;
 
         this.musical_genres.push(genre);
-        
+
       });
     }, (error: any): void => {
 

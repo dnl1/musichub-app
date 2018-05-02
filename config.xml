@@ -3,7 +3,7 @@
     <name>MusicHub</name>
     <description>The place where music happens.</description>
     <author email="danilooliveira9@hotmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.3:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
 import { User } from '../../app/models/user';
 import { MusicalGenre } from '../../app/models/musical-genre';
@@ -9,7 +9,6 @@ import { Alert } from '../../providers/alert/alert';
 import { SearchProjectsPage } from '../search-projects/search-projects';
 import { ContributionsPage } from '../contributions/contributions';
 import { DownloadAndPlayProvider } from '../../providers/download-and-play/download-and-play';
-import { EnvVariables } from '../../app/enviroment-variables/environment-variables.token';
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -30,18 +29,23 @@ export class ProjectDetailPage {
   baseInstrument: Instrument = new Instrument();
   ownProject: boolean = true;
   showContributions: boolean = false;
+  showRate: boolean = false;
   contributions: any;
   hideFinishButton: boolean = true;
   hidePlayAudio: boolean = true;
+  rate : number;
 
   private musical_project_id
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume: ApiConsume,
     private actionSheetCtrl: ActionSheetController, @Inject(Alert) private alert: Alert,
-    @Inject(DownloadAndPlayProvider) private downloadAndPlay: DownloadAndPlayProvider,
-    @Inject(EnvVariables) private envVars) {
+    @Inject(DownloadAndPlayProvider) private downloadAndPlay: DownloadAndPlayProvider) {
     this.musical_project_id = navParams.get('musical_project_id');
 
+    this.init();
+  }
+
+  init() {
     this.apiConsume.get(`musicalproject/${this.musical_project_id}`, {}, (data: MusicalProject) => {
       this.project = data;
 
@@ -57,8 +61,17 @@ export class ProjectDetailPage {
       this.owner = data;
       if (this.owner.id != new User().id) {
         this.ownProject = false;
+        this.showRate = this.project.finish == 1;
+
         this.getProjectInstruments();
 
+        if(this.showRate){
+          this.apiConsume.get(`ratemusicalproject/${this.project.id}`, {}, (data : any) => {
+            if(data && data.rate_value) {
+              this.rate = data.rate_value;
+            }
+          }, null, false);
+        }
       }
       else {
         this.apiConsume.get(`musicalproject/${this.project.id}/contributions`, {}, (data) => {
@@ -186,19 +199,26 @@ export class ProjectDetailPage {
       ]
     });
 
-    if(this.project.finish != 1)
+    if (this.project.finish != 1)
       actionSheet.present();
   }
 
   onFinishProjectClick() {
     this.apiConsume.post(`musicalproject/${this.project.id}/finish`, {}, (data) => {
       this.alert.showSuccess('Your project has finished with success!');
+      this.init();
     }, null, false);
   }
 
   onPlayAudioClick() {
-    var url = `${this.envVars.apiEndpoint}musicalproject/${this.project.id}/download`;
+    var url = `musicalproject/${this.project.id}/download`;
     this.downloadAndPlay.download(url, this.project.id);
+  }
+
+  onRating(ev : any) {
+    this.apiConsume.post('ratemusicalproject', { musical_project_id: this.project.id, musician_id: new User().id, rate_value: ev }, (data) => {
+      console.log('data',data);
+    }, null, false);
   }
 
 }

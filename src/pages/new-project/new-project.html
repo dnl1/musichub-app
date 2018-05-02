@@ -27,14 +27,14 @@
     </ion-item>
 
     <ion-item>
-      <ion-select [(ngModel)]="base_instrument_id" name="base_instrument_id" placeholder="Base Instrument">
+      <ion-select [(ngModel)]="base_instrument_id" name="base_instrument_id" placeholder="Base Instrument" (ionChange)="onBaseInstrumentChange($event)">
         <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-select [(ngModel)]="selectedInstruments" name="selectedInstruments" placeholder="Additional Instruments" multiple>
-        <ion-option *ngFor="let instrument of instruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
+        <ion-option *ngFor="let instrument of additionalInstruments" value="{{instrument.id}}">{{instrument.name}}</ion-option>
       </ion-select>
     </ion-item>
 

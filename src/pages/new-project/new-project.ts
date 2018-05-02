@@ -26,6 +26,7 @@ export class NewProjectPage {
   project: MusicalProject = new MusicalProject();
   musical_genres: Array<MusicalGenre> = new Array<MusicalGenre>();
   instruments: Instrument[] = new Array<Instrument>();
+  additionalInstruments: Instrument[] = new Array<Instrument>();
   selectedInstruments: Instrument[] = new Array<Instrument>();
   apiConsume: ApiConsume
   base_instrument_id: number;
@@ -79,8 +80,14 @@ export class NewProjectPage {
 
         this.instruments.push(instrument);
       });
+
+      this.additionalInstruments = this.instruments;
     }, (error: any): void => {
 
     }, false);
+  }
+
+  onBaseInstrumentChange(ev) {
+    this.additionalInstruments = this.instruments.filter((item) => item.id != ev);
   }
 }

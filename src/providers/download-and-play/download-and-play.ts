@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { File, FileEntry } from '@ionic-native/file';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { Media, MediaObject } from '@ionic-native/media';
+import { EnvVariables } from '../../app/enviroment-variables/environment-variables.token';
 
 /*
   Generated class for the DownloadAndPlayProvider provider.
@@ -12,12 +13,14 @@ import { Media, MediaObject } from '@ionic-native/media';
 @Injectable()
 export class DownloadAndPlayProvider {
 
-  constructor(public file: File, public txfr: FileTransfer, public audio: Media) { }
+  constructor(public file: File, public txfr: FileTransfer, public audio: Media, @Inject(EnvVariables) private envVars) { }
 
   public download(url: string, id: number) {
+    url = this.envVars.apiEndpoint + url;
+    
     let ft: FileTransferObject = this.txfr.create();
     let fn = this.file.dataDirectory + id.toString() + '.mp3';
-    console.log('fn', fn);
+
     let options = {
       headers: this.getHeaders()
     };
@@ -25,9 +28,7 @@ export class DownloadAndPlayProvider {
     console.log('start download');
     ft.download(url, fn, true, options).then(
       (fe: FileEntry) => {
-        console.log('fe', JSON.stringify(fe));
         let song: MediaObject = this.audio.create(fe.nativeURL);
-        console.log('song', JSON.stringify(song));
         song.play();
       },
       err => {

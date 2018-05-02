@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { MusicalProject } from '../../app/models/musical-project';
 import { ApiConsume } from '../../providers/api-consume/api-consume';
 import { Alert } from '../../providers/alert/alert';
+import { DownloadAndPlayProvider } from '../../providers/download-and-play/download-and-play';
 
 /**
  * Generated class for the ContributionsPage page.
@@ -24,7 +25,11 @@ export class ContributionsPage {
   private instrument_id;
   private instrument_name;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiConsume : ApiConsume, private actionSheetCtrl: ActionSheetController,  @Inject(Alert) private alert: Alert) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private apiConsume : ApiConsume, private actionSheetCtrl: ActionSheetController,  
+    @Inject(Alert) private alert: Alert,
+    @Inject(DownloadAndPlayProvider) private downloadAndPlay: DownloadAndPlayProvider) {
+      
     this.musical_project_id = navParams.get('musical_project_id');
     this.instrument_id = navParams.get('instrument_id');
     this.instrument_name = navParams.get('instrument_name');
@@ -50,6 +55,13 @@ export class ContributionsPage {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Choose an action',
       buttons: [
+        {
+          text: 'Listen',
+          handler: () => {
+            var url = `contribution/${item.contribution_id}/download`;
+            this.downloadAndPlay.download(url, item.contribution_id);
+          }
+        },
         {
           text: 'Approve',
           handler: () => {

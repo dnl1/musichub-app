@@ -15,9 +15,11 @@
 
 
 <ion-content padding>
-  <ion-select name="musical_genre_id" id="musical_genre_id" (ionChange)="search($event)" placeholder="Select musical genre" full>
-      <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
-    </ion-select>
+  <ion-select name="musical_genre_id" id="musical_genre_id" (ionChange)="search($event)" placeholder="Select musical genre"
+    full>
+    <ion-option *ngFor="let musical_genre of musical_genres" value="{{musical_genre.id}}">{{musical_genre.name}}</ion-option>
+  </ion-select>
+  <ion-label [class.hide]="!showMessageNotFound">No projects found.</ion-label>
   <ion-list>
     <ion-item *ngFor="let item of items" (click)="onItemClick(item.id)">
       {{ item.name }}
